@@ -2,6 +2,7 @@ package com.gabs.minhacarteira;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.View;
@@ -76,6 +77,24 @@ public class MainActivity extends AppCompatActivity {
                 db.inserirEvento();
 
                 Toast.makeText(MainActivity.this, db.getDatabaseName(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        entradaBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent trocaAct = new Intent(MainActivity.this, VizualizarEventos.class);
+                trocaAct.putExtra("acao", 0);
+                startActivity(trocaAct);
+            }
+        });
+
+        saidaBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent trocaAct = new Intent(MainActivity.this, VizualizarEventos.class);
+                trocaAct.putExtra("acao", 1);
+                startActivity(trocaAct);
             }
         });
     }

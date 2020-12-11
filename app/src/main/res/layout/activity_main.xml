@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="150dp"
+
             android:fontFamily="casual"
             android:text="mes/ano"
             android:textSize="50dp" />
@@ -29,7 +29,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_weight="1">
 
 
             <!--Botao de cadastro de saida-->
@@ -45,7 +46,8 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_gravity="center">
 
                 <!--Informacoes da entrada-->
                 <LinearLayout
@@ -138,8 +140,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="200dp"
             android:layout_marginRight="15dp"
+            android:layout_marginVertical="40dp"
             android:orientation="horizontal">
 
 
