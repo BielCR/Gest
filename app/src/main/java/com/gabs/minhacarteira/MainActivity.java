@@ -1,7 +1,5 @@
 package com.gabs.minhacarteira;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
@@ -9,9 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import ferramentas.EventosDB;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,19 +26,19 @@ public class MainActivity extends AppCompatActivity {
 
         //Linkagem dos componentes java e xml
         //Text Views
-        titulo = (TextView) findViewById(R.id.tituloMain);
-        entrada = (TextView) findViewById(R.id.entradatxt);
-        saida = (TextView) findViewById(R.id.saidaTxt);
-        saldo = (TextView) findViewById(R.id.saldoTxt);
+        titulo = findViewById(R.id.tituloMain);
+        entrada = findViewById(R.id.entradatxt);
+        saida = findViewById(R.id.saidaTxt);
+        saldo = findViewById(R.id.saldoTxt);
 
         //Image Buttons
-        entradaBtn = (ImageButton) findViewById(R.id.entradaBtn);
-        saidaBtn = (ImageButton) findViewById(R.id.saidaBtn);
+        entradaBtn = findViewById(R.id.entradaBtn);
+        saidaBtn = findViewById(R.id.saidaBtn);
 
         //Buttons
-        anteriorBtn = (Button) findViewById(R.id.anteriorBtn);
-        proximoBtn = (Button) findViewById(R.id.proximoBtn);
-        novoBtn = (Button) findViewById(R.id.novoBtn);
+        anteriorBtn = findViewById(R.id.anteriorBtn);
+        proximoBtn = findViewById(R.id.proximoBtn);
+        novoBtn = findViewById(R.id.novoBtn);
 
         //responsavel por mostrar todos os eventos de botoes
         cadastroEventos();
@@ -73,10 +70,10 @@ public class MainActivity extends AppCompatActivity {
         novoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventosDB db = new EventosDB(MainActivity.this);
-                db.inserirEvento();
+                //EventosDB db = new EventosDB(MainActivity.this);
+                //db.inserirEvento();
 
-                Toast.makeText(MainActivity.this, db.getDatabaseName(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(MainActivity.this, db.getDatabaseName(), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -103,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Mostrar a data do aplicativo
     private void mostraDataApp() {
-        String nomeMes[] = {"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+        String[] nomeMes = {"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
                 "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
 
         int mes = dataApp.get(Calendar.MONTH);

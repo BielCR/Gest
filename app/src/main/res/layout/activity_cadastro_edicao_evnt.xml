@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,8 +22,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginVertical="30dp"
+                android:fontFamily="@font/amaranth"
                 android:text="Título"
-                android:textSize="40sp" />
+                android:textSize="50sp" />
 
 
             <LinearLayout
@@ -43,6 +43,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/amaranth"
                         android:text="Nome:"
                         android:textSize="25sp" />
 
@@ -51,7 +52,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textSize="22sp" />
+                        android:fontFamily="@font/amaranth"
+                        android:textSize="25sp" />
 
                 </LinearLayout>
 
@@ -66,6 +68,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/amaranth"
                         android:text="Valor: R$"
                         android:textSize="25sp" />
 
@@ -73,8 +76,9 @@
                         android:id="@+id/valorCadastroTxt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/amaranth"
                         android:inputType="numberDecimal"
-                        android:textSize="22sp" />
+                        android:textSize="25sp" />
                 </LinearLayout>
 
                 <!--Informacao data-->
@@ -88,15 +92,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
+                        android:fontFamily="@font/amaranth"
                         android:text="Data do evento:"
-                        android:textSize="22sp" />
+                        android:textSize="25sp" />
 
                     <TextView
                         android:id="@+id/dataCadastroTxt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/amaranth"
                         android:text="20/05/1984"
-                        android:textSize="22sp" />
+                        android:textSize="25sp" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -112,14 +118,16 @@
                     android:id="@+id/repeteCadastroCheck"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/amaranth"
                     android:text="O evento repete?"
-                    android:textSize="22sp" />
+                    android:textSize="25sp" />
 
                 <Spinner
                     android:id="@+id/mesesCadastroSpinner"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:textSize="22sp" />
+                    android:fontFamily="@font/amaranth"
+                    android:textSize="25sp" />
 
             </LinearLayout>
 
@@ -128,8 +136,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginBottom="15dp">
+                android:layout_marginBottom="15dp"
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/fotoCadastroImg"
@@ -144,6 +152,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:fontFamily="@font/amaranth"
                     android:text="Foto" />
             </LinearLayout>
 
@@ -161,6 +170,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/amaranth"
                     android:text="Salvar" />
 
                 <Button
@@ -168,6 +178,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/amaranth"
                     android:text="Cancelar" />
             </LinearLayout>
 
