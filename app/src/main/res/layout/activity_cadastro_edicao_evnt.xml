@@ -24,7 +24,7 @@
                 android:layout_marginVertical="30dp"
                 android:fontFamily="@font/amaranth"
                 android:text="Título"
-                android:textSize="50sp" />
+                android:textSize="40sp" />
 
 
             <LinearLayout
