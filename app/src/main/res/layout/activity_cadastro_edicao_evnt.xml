@@ -14,19 +14,21 @@
         android:layout_marginHorizontal="15dp">
 
         <TextView
+            android:id="@+id/tituloCadastroTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Título"
             android:textSize="40sp"
             android:layout_gravity="center"
-            android:layout_marginVertical="15dp"/>
+            android:layout_marginVertical="30dp"/>
 
 
         <!--Informacao do nome-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -35,9 +37,11 @@
                 android:textSize="25sp"/>
 
             <EditText
+                android:id="@+id/nomeCadastroTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:textSize="22sp"/>
 
         </LinearLayout>
 
@@ -47,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_gravity="">
+            android:layout_marginBottom="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -56,55 +60,71 @@
                 android:textSize="25sp"/>
 
             <EditText
+                android:id="@+id/valorCadastroTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:textSize="22sp"/>
         </LinearLayout>
 
         <!--Informacao data-->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Data do evento"/>
+                android:layout_marginRight="5dp"
+                android:text="Data do evento:"
+                android:textSize="22sp"/>
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/dataCadastroTxt"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="20/05/1984"/>
+                android:text="20/05/1984"
+                android:textSize="22sp"/>
 
         </LinearLayout>
 
         <!--Informacao de repeticao do evento-->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
             <CheckBox
+                android:id="@+id/repeteCadastroCheck"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="O evento repete?"/>
+                android:text="O evento repete?"
+                android:textSize="22sp"/>
 
             <Spinner
+                android:id="@+id/mesesCadastroSpinner"
                 android:layout_width="70dp"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textSize="22sp"/>
 
         </LinearLayout>
 
 
         <!--Informacao da foto-->
         <ImageView
+            android:id="@+id/fotoCadastroImg"
             android:layout_width="180dp"
             android:layout_height="180dp"
-            android:background="@mipmap/icone"/>
+            android:background="@mipmap/icone"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"/>
         <Button
+            android:id="@+id/fotoCadastroBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Foto"/>
+            android:text="Foto"
+            android:layout_gravity="center"/>
         
         
         <!--Botoes finais-->
@@ -112,14 +132,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginHorizontal="30dp">
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginVertical="20dp">
 
             <Button
+                android:id="@+id/salvarCadastroBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Salvar"
                 android:layout_weight="1"/>
             <Button
+                android:id="@+id/cancelarCadastroBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Cancelar"
