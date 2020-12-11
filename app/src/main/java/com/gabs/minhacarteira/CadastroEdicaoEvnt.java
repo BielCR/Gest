@@ -16,9 +16,13 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.SimpleTimeZone;
+
+import modelo.Evento;
 
 public class CadastroEdicaoEvnt extends AppCompatActivity {
 
