@@ -42,11 +42,20 @@ public class VisualizarEventos extends AppCompatActivity {
         novoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent trocaAct = new Intent(VisualizarEventos.this, CadastroEdicaoEvnt.class);
+
 
                 //Ajuste de qual operacao executar
                 //adicionar put extra
-                startActivity(trocaAct);
+                if (operacao != -1) {
+                    Intent trocaAct = new Intent(VisualizarEventos.this, CadastroEdicaoEvnt.class);
+
+                    if (operacao == 0) {
+                        trocaAct.putExtra("acao", 0);
+                    } else {
+                        trocaAct.putExtra("acao", 1);
+                    }
+                    startActivity(trocaAct);
+                }
             }
         });
     }
