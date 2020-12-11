@@ -2,10 +2,12 @@ package com.gabs.minhacarteira;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 public class VisualizarEventos extends AppCompatActivity {
 
 
+    private DatePickerDialog calendarioUser;
     private TextView tituloTxt, totalTxt;
     private ListView listaEventosList;
     private Button novoBtn, cancelBtn;

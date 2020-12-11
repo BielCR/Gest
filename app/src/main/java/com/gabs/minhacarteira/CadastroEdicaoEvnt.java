@@ -13,6 +13,10 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.SimpleTimeZone;
+
 public class CadastroEdicaoEvnt extends AppCompatActivity {
 
 
@@ -29,8 +33,9 @@ public class CadastroEdicaoEvnt extends AppCompatActivity {
     2 - Edita entrada
     3 - Edita saida
      */
-    private  int acao = -1;
-    private void cadastrarEventos(){
+    private int acao = -1;
+
+    private void cadastrarEventos() {
 
     }
 
@@ -50,6 +55,37 @@ public class CadastroEdicaoEvnt extends AppCompatActivity {
         cancelarBtn = (Button) findViewById(R.id.cancelarCadastroBtn);
 
         Intent intencao = getIntent();
-        acao = intencao.getIntExtra("acao",-1);
+        acao = intencao.getIntExtra("acao", -1);
+
+        ajustaOperacao();
+    }
+
+    //metodo que auxilia na reutilização da activity, altera valores dos componentes reutilizaveis
+    private void ajustaOperacao() {
+
+        //Recuperar a data de hoje
+        Calendar hoje = Calendar.getInstance();
+        SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
+        data.setText(formatador.format(hoje.getTime()));
+
+        switch (acao) {
+            case 0:
+                //entradas
+                titulo.setText("Cadastro de Entrada");
+                break;
+            case 1:
+                //saidas
+                titulo.setText("Cadastro de Saída");
+                break;
+            case 2:
+                //edicao de entradas
+                titulo.setText("Edição de Entrada");
+                break;
+            case 3:
+                //edicao de saidas
+                titulo.setText("Edição de Saída");
+                break;
+            default:
+        }
     }
 }
