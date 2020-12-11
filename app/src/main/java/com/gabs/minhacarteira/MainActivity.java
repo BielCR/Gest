@@ -83,8 +83,9 @@ public class MainActivity extends AppCompatActivity {
         entradaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent trocaAct = new Intent(MainActivity.this, VizualizarEventos.class);
+                Intent trocaAct = new Intent(MainActivity.this, VisualizarEventos.class);
                 trocaAct.putExtra("acao", 0);
+                //iniciamos a activitie passada como parametro
                 startActivity(trocaAct);
             }
         });
@@ -92,8 +93,9 @@ public class MainActivity extends AppCompatActivity {
         saidaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent trocaAct = new Intent(MainActivity.this, VizualizarEventos.class);
+                Intent trocaAct = new Intent(MainActivity.this, VisualizarEventos.class);
                 trocaAct.putExtra("acao", 1);
+                //iniciamos a activitie passada como parametro
                 startActivity(trocaAct);
             }
         });
