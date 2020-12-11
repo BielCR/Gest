@@ -14,8 +14,6 @@ import android.widget.Toast;
 
 public class VisualizarEventos extends AppCompatActivity {
 
-
-    private DatePickerDialog calendarioUser;
     private TextView tituloTxt, totalTxt;
     private ListView listaEventosList;
     private Button novoBtn, cancelBtn;
