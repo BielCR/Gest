@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,17 +35,31 @@ public class VisualizarEventos extends AppCompatActivity {
         operacao = intencao.getIntExtra("acao", -1);
 
         ajustaOperacao();
+        cadastrarEventos();
     }
 
-    private void ajustaOperacao(){
+    private void cadastrarEventos() {
+        novoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent trocaAct = new Intent(VisualizarEventos.this, CadastroEdicaoEvnt.class);
+
+                //Ajuste de qual operacao executar
+                //adicionar put extra
+                startActivity(trocaAct);
+            }
+        });
+    }
+
+    private void ajustaOperacao() {
         //busca no banco a respeito dos eventos existentes na lista
 
-        if (operacao == 0){
+        if (operacao == 0) {
             tituloTxt.setText("Entradas");
-        }else{
-            if (operacao == 1){
+        } else {
+            if (operacao == 1) {
                 tituloTxt.setText("Saídas");
-            }else{
+            } else {
                 //erro na configuracao da intent
                 Toast.makeText(VisualizarEventos.this, "erro no parametro acao", Toast.LENGTH_SHORT).show();
             }
