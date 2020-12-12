@@ -4,11 +4,13 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,8 +18,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import ferramentas.EventosDB;
 import modelo.Evento;
@@ -32,6 +36,7 @@ public class CadastroEdicaoEvnt extends AppCompatActivity {
     private ImageView foto;
     private Button fotoBtn, salvarBtn, cancelarBtn;
     private Calendar calendarioTemp;
+    private Spinner mesesRepete;
 
 
     /*
@@ -41,6 +46,43 @@ public class CadastroEdicaoEvnt extends AppCompatActivity {
     3 - Edita saida
      */
     private int acao = -1;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_cadastro_edicao_evnt);
+
+        titulo = (TextView) findViewById(R.id.tituloCadastroTxt);
+        data = (TextView) findViewById(R.id.dataCadastroTxt);
+        nome = (EditText) findViewById(R.id.nomeCadastroTxt);
+        valor = (EditText) findViewById(R.id.valorCadastroTxt);
+        repeteBtn = (CheckBox) findViewById(R.id.repeteCadastroCheck);
+        foto = (ImageView) findViewById(R.id.fotoCadastroImg);
+        fotoBtn = (Button) findViewById(R.id.fotoCadastroBtn);
+        salvarBtn = (Button) findViewById(R.id.salvarCadastroBtn);
+        cancelarBtn = (Button) findViewById(R.id.cancelarCadastroBtn);
+        mesesRepete = (Spinner) findViewById(R.id.mesesCadastroSpinner);
+
+        Intent intencao = getIntent();
+        acao = intencao.getIntExtra("acao", -1);
+
+        ajustaOperacao();
+        cadastrarEventos();
+    }
+
+    private void confuguraSpinner() {
+        List<String> meses = new ArrayList<String>();
+
+        //Apenas 24 meses de repeticao
+        for (int i = 1; i < 24; i++) {
+            meses.add(i + "");
+        }
+
+        ArrayAdapter<String> listaAdapter = new ArrayAdapter<String>(this,
+                R.layout.support_simple_spinner_dropdown_item, meses);
+
+        mesesRepete.setAdapter(listaAdapter);
+    }
 
     private void cadastrarEventos() {
         //Configuracao do datePicker
@@ -103,28 +145,6 @@ public class CadastroEdicaoEvnt extends AppCompatActivity {
         } catch (ParseException ex) {
             System.err.println("Erro no formato da data...");
         }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastro_edicao_evnt);
-
-        titulo = (TextView) findViewById(R.id.tituloCadastroTxt);
-        data = (TextView) findViewById(R.id.dataCadastroTxt);
-        nome = (EditText) findViewById(R.id.nomeCadastroTxt);
-        valor = (EditText) findViewById(R.id.valorCadastroTxt);
-        repeteBtn = (CheckBox) findViewById(R.id.repeteCadastroCheck);
-        foto = (ImageView) findViewById(R.id.fotoCadastroImg);
-        fotoBtn = (Button) findViewById(R.id.fotoCadastroBtn);
-        salvarBtn = (Button) findViewById(R.id.salvarCadastroBtn);
-        cancelarBtn = (Button) findViewById(R.id.cancelarCadastroBtn);
-
-        Intent intencao = getIntent();
-        acao = intencao.getIntExtra("acao", -1);
-
-        ajustaOperacao();
-        cadastrarEventos();
     }
 
     //metodo que auxilia na reutilização da activity, altera valores dos componentes reutilizaveis
