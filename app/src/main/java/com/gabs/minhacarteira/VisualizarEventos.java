@@ -63,6 +63,13 @@ public class VisualizarEventos extends AppCompatActivity {
                 }
             }
         });
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void ajustaOperacao() {

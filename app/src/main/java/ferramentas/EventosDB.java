@@ -70,6 +70,10 @@ public class EventosDB extends SQLiteOpenHelper {
         Calendar ultimoDia = Calendar.getInstance();
         ultimoDia.setTime(data.getTime());
         ultimoDia.set(Calendar.DAY_OF_MONTH, ultimoDia.getActualMaximum(Calendar.DAY_OF_MONTH));
+        ultimoDia.set(Calendar.HOUR, 23);
+        ultimoDia.set(Calendar.MINUTE,59);
+        ultimoDia.set(Calendar.SECOND,59);
+        ultimoDia.set(Calendar.MILLISECOND,999);
 
 
 

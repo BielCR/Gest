@@ -68,13 +68,14 @@ public class CadastroEdicaoEvnt extends AppCompatActivity {
 
         ajustaOperacao();
         cadastrarEventos();
+        confuguraSpinner();
     }
 
     private void confuguraSpinner() {
         List<String> meses = new ArrayList<String>();
 
         //Apenas 24 meses de repeticao
-        for (int i = 1; i < 24; i++) {
+        for (int i = 1; i <= 24; i++) {
             meses.add(i + "");
         }
 
@@ -82,6 +83,7 @@ public class CadastroEdicaoEvnt extends AppCompatActivity {
                 R.layout.support_simple_spinner_dropdown_item, meses);
 
         mesesRepete.setAdapter(listaAdapter);
+        mesesRepete.setEnabled(false);
     }
 
     private void cadastrarEventos() {
@@ -108,6 +110,25 @@ public class CadastroEdicaoEvnt extends AppCompatActivity {
                 cadastrarNovoEvento();
             }
         });
+
+        repeteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(repeteBtn.isChecked()) {
+                    mesesRepete.setEnabled(true);
+                }else{
+                    mesesRepete.setEnabled(false);
+                }
+            }
+        });
+
+        cancelarBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //termina e execucao de uma act e volta a anterior
+                finish();
+            }
+        });
     }
 
     private void cadastrarNovoEvento() {
@@ -128,7 +149,9 @@ public class CadastroEdicaoEvnt extends AppCompatActivity {
 
             //verificando se esse evento ira repetir por alguns meses(VOLTAR)
             if (repeteBtn.isChecked()) {
-                //por enquanto estamos consif=derando apenas um mes
+                //definindo o mes limite
+                String mesLimite = (String) mesesRepete.getSelectedItem();
+                dataLimite.add(Calendar.MONTH, Integer.parseInt(mesLimite));
 
             }
 
