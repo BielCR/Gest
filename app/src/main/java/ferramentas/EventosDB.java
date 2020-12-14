@@ -65,19 +65,23 @@ public class EventosDB extends SQLiteOpenHelper {
         Calendar dia1 = Calendar.getInstance();
         dia1.setTime(data.getTime());
         dia1.set(Calendar.DAY_OF_MONTH, 1);
+        dia1.set(Calendar.HOUR, -12);
+        dia1.set(Calendar.MINUTE, 0);
+        dia1.set(Calendar.SECOND, 0);
 
         //definindo o ultimo dia do mes
         Calendar ultimoDia = Calendar.getInstance();
         ultimoDia.setTime(data.getTime());
         ultimoDia.set(Calendar.DAY_OF_MONTH, ultimoDia.getActualMaximum(Calendar.DAY_OF_MONTH));
-        ultimoDia.set(Calendar.HOUR, 23);
+        ultimoDia.set(Calendar.HOUR, 11);
         ultimoDia.set(Calendar.MINUTE, 59);
         ultimoDia.set(Calendar.SECOND, 59);
         ultimoDia.set(Calendar.MILLISECOND, 999);
 
 
-        String sql = "SELECT * FROM evento WHERE dataocorreu <= " + ultimoDia.getTime().getTime() +
-                " AND dataocorreu >= " + dia1.getTime().getTime();
+        String sql = "SELECT * FROM evento WHERE ((datavalida <= " + ultimoDia.getTime().getTime() +
+                " AND datavalida >= " + dia1.getTime().getTime()+") OR (dataocorreu <= "+ ultimoDia.getTime().getTime()+
+                " AND datavalida >= "+ dia1.getTime().getTime()+"))";
         sql += " AND valor ";
 
         if (op == 0) {

@@ -31,7 +31,8 @@
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="15dp"
             android:layout_weight="1"
-            android:fontFamily="@font/amaranth" />
+            android:fontFamily="@font/amaranth"
+            android:background="@drawable/borda_preta"/>
 
         <!--Representando o total dos eventos-->
         <LinearLayout

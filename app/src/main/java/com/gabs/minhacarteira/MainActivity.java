@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
         }
         //temos que realizar uma busca no banco de dados pa avaliar se exitem meses anteriores cadastrados
         mostraDataApp();
+        atualizaValores();
     }
 
     private void atualizaValores() {

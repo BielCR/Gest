@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -139,35 +138,35 @@ public class CadastroEdicaoEvnt extends AppCompatActivity {
             valor *= -1;
         }
 
-        SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
-        String dataStr = this.data.getText().toString();
-        try {
-            Date diaEvento = formatador.parse(dataStr);
-            //um novo calendario para setar a data limite (repeticao)
-            Calendar dataLimite = Calendar.getInstance();
-            dataLimite.setTime(calendarioTemp.getTime());
+        //SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
+        // dataStr = this.data.getText().toString();
+        // try {
+        Date diaEvento = calendarioTemp.getTime();
+        //um novo calendario para setar a data limite (repeticao)
+        Calendar dataLimite = Calendar.getInstance();
+        dataLimite.setTime(calendarioTemp.getTime());
 
-            //verificando se esse evento ira repetir por alguns meses(VOLTAR)
-            if (repeteBtn.isChecked()) {
-                //definindo o mes limite
-                String mesLimite = (String) mesesRepete.getSelectedItem();
-                dataLimite.add(Calendar.MONTH, Integer.parseInt(mesLimite));
+        //verificando se esse evento ira repetir por alguns meses(VOLTAR)
+        if (repeteBtn.isChecked()) {
+            //definindo o mes limite
+            String mesLimite = (String) mesesRepete.getSelectedItem();
+            dataLimite.add(Calendar.MONTH, Integer.parseInt(mesLimite));
 
-            }
-
-            //setando ate o ultimo dia do mes limite
-            dataLimite.set(Calendar.DAY_OF_MONTH, dataLimite.getActualMaximum(Calendar.DAY_OF_MONTH));
-
-            Evento novoEvento = new Evento(nome, null, valor, new Date(), dataLimite.getTime(), diaEvento);
-
-            //inserir esse evento no banco de dados
-            EventosDB bd = new EventosDB(CadastroEdicaoEvnt.this);
-            bd.inserirEvento(novoEvento);
-            Toast.makeText(CadastroEdicaoEvnt.this, "Cadastro realizado com sucesso!", Toast.LENGTH_LONG).show();
-            finish();
-        } catch (ParseException ex) {
-            System.err.println("Erro no formato da data...");
         }
+
+        //setando ate o ultimo dia do mes limite
+        dataLimite.set(Calendar.DAY_OF_MONTH, dataLimite.getActualMaximum(Calendar.DAY_OF_MONTH));
+
+        Evento novoEvento = new Evento(nome, null, valor, new Date(), dataLimite.getTime(), diaEvento);
+
+        //inserir esse evento no banco de dados
+        EventosDB bd = new EventosDB(CadastroEdicaoEvnt.this);
+        bd.inserirEvento(novoEvento);
+        Toast.makeText(CadastroEdicaoEvnt.this, "Cadastro realizado com sucesso!", Toast.LENGTH_LONG).show();
+        finish();
+        //} catch (ParseException ex) {
+        System.err.println("Erro no formato da data...");
+        //}
     }
 
     //metodo que auxilia na reutilização da activity, altera valores dos componentes reutilizaveis
