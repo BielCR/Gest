@@ -10,7 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import modelo.Evento;
 
@@ -34,11 +36,11 @@ public class ItemListaEventos extends ArrayAdapter<Evento> {
         Evento eventoAtual = eventos.get(indice);
 
         final View resultado;
-        viewHolder novaView;
+        ViewHolder novaView;
 
         //caso 1 e quando a view esta sendo criada pela primeira vez
         if (convertView == null) {
-            novaView = new viewHolder();
+            novaView = new ViewHolder();
 
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.intem_lista_eventos, parent, false);
@@ -53,10 +55,29 @@ public class ItemListaEventos extends ArrayAdapter<Evento> {
             resultado = convertView;
             convertView.setTag(novaView);
 
+        }else{
+            //caso 2 é quando a view está sendo modificada
+            novaView = (ViewHolder) convertView.getTag();
+            resultado = convertView;
         }
+        //setando todos os resultados
+        novaView.nomeTxt.setText(eventoAtual.getNome());
+        novaView.valorTxt.setText(eventoAtual.getValor()+"");
+        novaView.fotoTxt.setText(eventoAtual.getCaminhoFoto() == null ? "Não" : "Sim");
+        SimpleDateFormat formataData = new SimpleDateFormat("dd/MM/yyyy");
+        novaView.dataTxt.setText(formataData.format(eventoAtual.getOcorreu()));
+
+            //evento repete
+        Calendar data1 = Calendar.getInstance();
+        data1.setTime(eventoAtual.getOcorreu());
+        Calendar data2 = Calendar.getInstance();
+        data2.setTime(eventoAtual.getValida());
+        novaView.repetirTxt.setText(data1.get(Calendar.MONTH) != data2.get(Calendar.MONTH) ? "Sim" : "Não");
+
+        return resultado;
     }
 
-    private static class viewHolder {
+    private static class ViewHolder {
         private TextView nomeTxt, valorTxt, dataTxt, repetirTxt, fotoTxt;
     }
 }
