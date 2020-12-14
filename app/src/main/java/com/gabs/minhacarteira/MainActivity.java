@@ -10,15 +10,18 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
+import ferramentas.EventosDB;
+import modelo.Evento;
+
 public class MainActivity extends AppCompatActivity {
 
+    static Calendar dataApp;
     private TextView titulo, entrada, saida, saldo;
     private ImageButton entradaBtn, saidaBtn;
     private Button anteriorBtn, proximoBtn, novoBtn;
-
     private Calendar hoje;
-    static Calendar dataApp;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
 
         //Mostrar a data no app
         mostraDataApp();
+
+        //atualizando os valores na tela inicial
+        atualizaValores();
 
     }
 
@@ -124,6 +130,31 @@ public class MainActivity extends AppCompatActivity {
         }
         //temos que realizar uma busca no banco de dados pa avaliar se exitem meses anteriores cadastrados
         mostraDataApp();
+    }
+
+    private void atualizaValores() {
+        //buscando entradas e saidas no banco de dados
+        EventosDB db = new EventosDB(MainActivity.this);
+
+        //armazenando informações em Arrays
+        ArrayList<Evento> saidas = db.buscaEvento(1, dataApp);
+        ArrayList<Evento> entradas = db.buscaEvento(0, dataApp);
+
+        double entradasTotal = 0.0, saidasTotal = 0.0;
+
+        //somando valores de entrada e saida no laco de repeticao
+        for (Evento i : entradas) {
+            entradasTotal += i.getValor();
+        }
+        for (Evento i : saidas) {
+            saidasTotal += i.getValor();
+        }
+
+        //exibindo na aplicacao os valores totais
+        entrada.setText(entradasTotal+"");
+        saida.setText(saidasTotal+"");
+        saldo.setText((entradasTotal - saidasTotal) +"");
+
     }
 
 

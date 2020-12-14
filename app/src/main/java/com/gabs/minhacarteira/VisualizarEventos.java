@@ -93,5 +93,14 @@ public class VisualizarEventos extends AppCompatActivity {
 
         adapter = new ItemListaEventos(getApplicationContext(), eventos);
         listaEventosList.setAdapter(adapter);
+
+
+        double total = 0.0;
+        for(Evento i : eventos){
+            total += i.getValor();
+        }
+
+        totalTxt.setText(total + "");
+
     }
 }
