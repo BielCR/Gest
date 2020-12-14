@@ -10,11 +10,19 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.Date;
+
+import modelo.Evento;
+
 public class VisualizarEventos extends AppCompatActivity {
 
     private TextView tituloTxt, totalTxt;
     private ListView listaEventosList;
     private Button novoBtn, cancelBtn;
+
+    private ArrayList<Evento> eventos;
+    private ItemListaEventos adapter;
 
     //Operacao = 0 - entrada
     //Operacao = 1 - saida
@@ -35,6 +43,7 @@ public class VisualizarEventos extends AppCompatActivity {
 
         ajustaOperacao();
         cadastrarEventos();
+        carregaEventosLista();
     }
 
     private void cadastrarEventos() {
@@ -68,5 +77,16 @@ public class VisualizarEventos extends AppCompatActivity {
                 Toast.makeText(VisualizarEventos.this, "erro no parametro acao", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private void carregaEventosLista(){
+        eventos = new ArrayList<>();
+
+        //busca de eventos no banco de dados
+        eventos.add(new Evento("loja", null, 10.60, new Date(), new Date(), new Date()));
+        eventos.add(new Evento("bar", null, 100, new Date(), new Date(), new Date()));
+
+        adapter = new ItemListaEventos(getApplicationContext(), eventos);
+        listaEventosList.setAdapter(adapter);
     }
 }
