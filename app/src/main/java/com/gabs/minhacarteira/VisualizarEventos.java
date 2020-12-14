@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.Date;
 
+import ferramentas.EventosDB;
 import modelo.Evento;
 
 public class VisualizarEventos extends AppCompatActivity {
@@ -83,8 +84,12 @@ public class VisualizarEventos extends AppCompatActivity {
         eventos = new ArrayList<>();
 
         //busca de eventos no banco de dados
-        eventos.add(new Evento("loja", null, 10.60, new Date(), new Date(), new Date()));
-        eventos.add(new Evento("bar", null, 100, new Date(), new Date(), new Date()));
+        //.add(new Evento("loja", null, 10.60, new Date(), new Date(), new Date()));
+        //eventos.add(new Evento("bar", null, 100, new Date(), new Date(), new Date()));
+
+        EventosDB db = new EventosDB(VisualizarEventos.this);
+        eventos = db.buscaEvento(operacao, MainActivity.dataApp);
+
 
         adapter = new ItemListaEventos(getApplicationContext(), eventos);
         listaEventosList.setAdapter(adapter);

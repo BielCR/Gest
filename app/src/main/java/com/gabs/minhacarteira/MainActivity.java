@@ -16,7 +16,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton entradaBtn, saidaBtn;
     private Button anteriorBtn, proximoBtn, novoBtn;
 
-    private Calendar hoje, dataApp;
+    private Calendar hoje;
+    static Calendar dataApp;
 
 
     @Override

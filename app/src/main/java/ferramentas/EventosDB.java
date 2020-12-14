@@ -5,7 +5,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.icu.util.Calendar;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import modelo.Evento;
@@ -52,8 +54,13 @@ public class EventosDB extends SQLiteOpenHelper {
 
     }
 
-    public void buscaEvento() {
-
+    public ArrayList<Evento> buscaEvento(int op, Calendar data) {
+        if(op == 0){
+            //entradas
+        }else{
+            //saidas (valor negativo)
+        }
+        return null;
     }
 
     @Override
