@@ -55,19 +55,19 @@ public class ItemListaEventos extends ArrayAdapter<Evento> {
             resultado = convertView;
             convertView.setTag(novaView);
 
-        }else{
+        } else {
             //caso 2 é quando a view está sendo modificada
             novaView = (ViewHolder) convertView.getTag();
             resultado = convertView;
         }
         //setando todos os resultados
         novaView.nomeTxt.setText(eventoAtual.getNome());
-        novaView.valorTxt.setText(eventoAtual.getValor()+"");
+        novaView.valorTxt.setText(String.format("%.2f", eventoAtual.getValor()));
         novaView.fotoTxt.setText(eventoAtual.getCaminhoFoto() == null ? "Não" : "Sim");
         SimpleDateFormat formataData = new SimpleDateFormat("dd/MM/yyyy");
         novaView.dataTxt.setText(formataData.format(eventoAtual.getOcorreu()));
 
-            //evento repete
+        //evento repete
         Calendar data1 = Calendar.getInstance();
         data1.setTime(eventoAtual.getOcorreu());
         Calendar data2 = Calendar.getInstance();

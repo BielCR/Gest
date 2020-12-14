@@ -11,7 +11,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import ferramentas.EventosDB;
 import modelo.Evento;
@@ -56,10 +55,12 @@ public class VisualizarEventos extends AppCompatActivity {
 
                     if (operacao == 0) {
                         trocaAct.putExtra("acao", 0);
+                        startActivityForResult(trocaAct, 0);
                     } else {
                         trocaAct.putExtra("acao", 1);
+                        startActivityForResult(trocaAct, 1);
                     }
-                    startActivity(trocaAct);
+
                 }
             }
         });
@@ -87,7 +88,7 @@ public class VisualizarEventos extends AppCompatActivity {
         }
     }
 
-    private void carregaEventosLista(){
+    private void carregaEventosLista() {
         eventos = new ArrayList<>();
 
         //busca de eventos no banco de dados
@@ -103,11 +104,16 @@ public class VisualizarEventos extends AppCompatActivity {
 
 
         double total = 0.0;
-        for(Evento i : eventos){
+        for (Evento i : eventos) {
             total += i.getValor();
         }
 
-        totalTxt.setText(total + "");
+        totalTxt.setText(String.format("%.2f", total));
 
+    }
+
+    protected void onActivityResult(int codReq, int codResult, Intent data) {
+        super.onActivityResult(codReq, codResult, data);
+        carregaEventosLista();
     }
 }

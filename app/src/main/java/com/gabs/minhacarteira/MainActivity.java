@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent trocaAct = new Intent(MainActivity.this, VisualizarEventos.class);
                 trocaAct.putExtra("acao", 0);
                 //iniciamos a activitie passada como parametro
-                startActivity(trocaAct);
+                startActivityForResult(trocaAct, 0);
             }
         });
 
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent trocaAct = new Intent(MainActivity.this, VisualizarEventos.class);
                 trocaAct.putExtra("acao", 1);
                 //iniciamos a activitie passada como parametro
-                startActivity(trocaAct);
+                startActivityForResult(trocaAct, 1);
             }
         });
     }
@@ -151,11 +151,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //exibindo na aplicacao os valores totais
-        entrada.setText(entradasTotal+"");
-        saida.setText(saidasTotal+"");
-        saldo.setText((entradasTotal - saidasTotal) +"");
+        double totalSaldo = entradasTotal - saidasTotal;
+        entrada.setText(String.format("%.2f", entradasTotal));
+        saida.setText(String.format("%.2f", saidasTotal));
+        saldo.setText(String.format("%.2f", totalSaldo));
 
     }
 
+    protected void onActivityResult(int codReq, int codResult, Intent data) {
+        super.onActivityResult(codReq, codResult, data);
+        atualizaValores();
+    }
 
 }

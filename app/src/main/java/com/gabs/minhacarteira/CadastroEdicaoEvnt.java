@@ -114,9 +114,9 @@ public class CadastroEdicaoEvnt extends AppCompatActivity {
         repeteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(repeteBtn.isChecked()) {
+                if (repeteBtn.isChecked()) {
                     mesesRepete.setEnabled(true);
-                }else{
+                } else {
                     mesesRepete.setEnabled(false);
                 }
             }
