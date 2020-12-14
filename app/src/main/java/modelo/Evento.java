@@ -7,9 +7,9 @@ public class Evento {
     private String nome, caminhoFoto;
     private double valor;
     private Date cadastro, valida, ocorreu;
-    private long id;
+    private int id;
 
-    public Evento(String nome, String caminhoFoto, double valor, Date cadastro, Date valida, Date ocorreu, long id) {
+    public Evento(String nome, String caminhoFoto, double valor, Date cadastro, Date valida, Date ocorreu, int id) {
         this.nome = nome;
         this.caminhoFoto = caminhoFoto;
         this.valor = valor;
@@ -80,7 +80,7 @@ public class Evento {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 }

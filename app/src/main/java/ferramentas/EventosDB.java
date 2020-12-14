@@ -2,6 +2,7 @@ package ferramentas;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -33,7 +34,9 @@ public class EventosDB extends SQLiteOpenHelper {
     public void inserirEvento(Evento novoEvento) {
 
         try (SQLiteDatabase db = this.getWritableDatabase()) {
+
             ContentValues valores = new ContentValues();
+            
             valores.put("nome", novoEvento.getNome());
             valores.put("valor", novoEvento.getValor());
             valores.put("imagem", novoEvento.getCaminhoFoto());
@@ -55,12 +58,64 @@ public class EventosDB extends SQLiteOpenHelper {
     }
 
     public ArrayList<Evento> buscaEvento(int op, Calendar data) {
+
+        ArrayList<Evento> resultado = new ArrayList<>();
+
+        //definindo o primeiro dia do mês
+        Calendar dia1 = Calendar.getInstance();
+        dia1.setTime(data.getTime());
+        dia1.set(Calendar.DAY_OF_MONTH,1);
+
+        //definindo o ultimo dia do mes
+        Calendar ultimoDia = Calendar.getInstance();
+        ultimoDia.setTime(data.getTime());
+        ultimoDia.set(Calendar.DAY_OF_MONTH, ultimoDia.getActualMaximum(Calendar.DAY_OF_MONTH));
+
+
+
+        String sql = "SELECT * FROM evento WHERE dataocorreu <= "+ultimoDia.getTime().getTime()+
+                " AND dataocorreu >= "+dia1.getTime().getTime();
+        sql += " AND valor ";
+
         if(op == 0){
             //entradas
+            sql += ">= 0";
         }else{
             //saidas (valor negativo)
+            sql += "<= 0";
         }
-        return null;
+
+
+        try(SQLiteDatabase db = this.getWritableDatabase()){
+
+            Cursor tuplas = db.rawQuery(sql, null);
+
+            //efetuar leitura das tuplas
+            if (tuplas.moveToFirst()){
+                do {
+                    int id = tuplas.getInt(0);
+                    String nome =  tuplas.getString(1);
+                    double valor = tuplas.getDouble(2);
+                    String imagem = tuplas.getString(3);
+                    Date dateOcorreu = new Date(tuplas.getLong(4));
+                    Date dateCadastro = new Date(tuplas.getLong(5));
+                    Date dateValida = new Date(tuplas.getLong(6));
+
+                    if (valor < 0){
+                        valor *= -1;
+                    }
+
+                    Evento temp = new Evento(nome, imagem, valor, dateCadastro, dateValida, dateOcorreu, id);
+                    resultado.add(temp);
+
+                }while (tuplas.moveToNext());
+            }
+
+        }catch (SQLiteException ex){
+            System.err.println("Ocorreu um erro na consulta do banco de dados");
+            ex.printStackTrace();
+        }
+        return resultado;
     }
 
     @Override
