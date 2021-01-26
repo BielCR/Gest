@@ -189,12 +189,28 @@ public class CadastroEdicaoEvnt extends AppCompatActivity {
             case 2:
                 //edicao de entradas
                 titulo.setText("Edição de Entrada");
+                ajustaEdicao();
                 break;
             case 3:
                 //edicao de saidas
                 titulo.setText("Edição de Saída");
+                ajustaEdicao();
                 break;
             default:
         }
     }
+
+    private void ajustaEdicao() {
+        cancelarBtn.setText("Excluir");
+        salvarBtn.setText("Atualizar");
+
+        int id = getIntent().getIntExtra("id", 0);
+        if (id != 0) {
+            EventosDB db = new EventosDB(CadastroEdicaoEvnt.this);
+            Evento eventoSelect =  db.buscaEventoID(id);
+
+            //carregar as informacoes nos campos de edicao
+        }
+    }
 }
+

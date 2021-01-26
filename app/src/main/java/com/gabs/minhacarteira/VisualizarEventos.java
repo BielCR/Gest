@@ -3,6 +3,7 @@ package com.gabs.minhacarteira;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -101,6 +102,29 @@ public class VisualizarEventos extends AppCompatActivity {
 
         adapter = new ItemListaEventos(getApplicationContext(), eventos);
         listaEventosList.setAdapter(adapter);
+
+        listaEventosList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int indice, long id) {
+
+                Evento eventoSelceionado = eventos.get(indice);
+                Intent novoFluxo = new Intent(VisualizarEventos.this, CadastroEdicaoEvnt.class);
+
+                if (operacao == 00) {
+                    //edicao de entrada
+                    novoFluxo.putExtra("acao", 2);
+                } else {
+                    //edicao de saida
+                    novoFluxo.putExtra("acao", 3);
+                }
+
+                novoFluxo.putExtra("id", eventoSelceionado.getId());
+
+                //iniciando
+                startActivityForResult(novoFluxo, operacao);
+
+            }
+        });
 
 
         double total = 0.0;

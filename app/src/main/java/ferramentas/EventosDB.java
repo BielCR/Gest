@@ -57,6 +57,43 @@ public class EventosDB extends SQLiteOpenHelper {
 
     }
 
+    public Evento buscaEventoID(int idEvento) {
+
+        //sql da busca pelo id recebido
+        String sql = "SELECT * FROM evento WHERE id = " + idEvento;
+
+        //realizando a busca no banco
+        Evento result = null;
+
+        //extraindo as informacoes
+        try (SQLiteDatabase db = this.getWritableDatabase()) {
+
+            Cursor tupla = db.rawQuery(sql, null);
+            if (tupla.moveToFirst()) {
+
+                String nome = tupla.getString(1);
+                double valor = tupla.getDouble(2);
+                String imagem = tupla.getString(3);
+                Date dateOcorreu = new Date(tupla.getLong(4));
+                Date dateCadastro = new Date(tupla.getLong(5));
+                Date dateValida = new Date(tupla.getLong(6));
+
+                if (valor < 0) {
+                    valor *= -1;
+                }
+
+                result = new Evento(nome, imagem, valor, dateCadastro, dateValida, dateOcorreu, idEvento);
+            }
+        } catch (SQLiteException ex) {
+            //mensagem de erro do banco de dados
+            System.err.println("Erro na consulta ao banco pelo id");
+            ex.printStackTrace();
+        }
+
+        return result;
+
+    }
+
     public ArrayList<Evento> buscaEvento(int op, Calendar data) {
 
         ArrayList<Evento> resultado = new ArrayList<>();
@@ -80,8 +117,8 @@ public class EventosDB extends SQLiteOpenHelper {
 
 
         String sql = "SELECT * FROM evento WHERE ((datavalida <= " + ultimoDia.getTime().getTime() +
-                " AND datavalida >= " + dia1.getTime().getTime()+") OR (dataocorreu <= "+ ultimoDia.getTime().getTime()+
-                " AND datavalida >= "+ dia1.getTime().getTime()+"))";
+                " AND datavalida >= " + dia1.getTime().getTime() + ") OR (dataocorreu <= " + ultimoDia.getTime().getTime() +
+                " AND datavalida >= " + dia1.getTime().getTime() + "))";
         sql += " AND valor ";
 
         if (op == 0) {
