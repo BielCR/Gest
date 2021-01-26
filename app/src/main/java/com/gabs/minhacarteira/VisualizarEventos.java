@@ -118,7 +118,7 @@ public class VisualizarEventos extends AppCompatActivity {
                     novoFluxo.putExtra("acao", 3);
                 }
 
-                novoFluxo.putExtra("id", eventoSelceionado.getId());
+                novoFluxo.putExtra("id", eventoSelceionado.getId()+"");
 
                 //iniciando
                 startActivityForResult(novoFluxo, operacao);

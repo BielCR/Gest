@@ -204,12 +204,25 @@ public class CadastroEdicaoEvnt extends AppCompatActivity {
         cancelarBtn.setText("Excluir");
         salvarBtn.setText("Atualizar");
 
-        int id = getIntent().getIntExtra("id", 0);
+        int id = Integer.parseInt(getIntent().getStringExtra("id"));
         if (id != 0) {
             EventosDB db = new EventosDB(CadastroEdicaoEvnt.this);
             Evento eventoSelect =  db.buscaEventoID(id);
 
             //carregar as informacoes nos campos de edicao
+           SimpleDateFormat formatador = new SimpleDateFormat("dd/mm/yyyy");
+
+            nome.setText(eventoSelect.getNome());
+            valor.setText(eventoSelect.getValor()+"");
+            data.setText(formatador.format(eventoSelect.getOcorreu()));
+
+            Calendar dataValida = Calendar.getInstance();
+            dataValida.setTime(eventoSelect.getValida());
+
+            Calendar dataOcorreu = Calendar.getInstance();
+            dataOcorreu.setTime(eventoSelect.getOcorreu());
+
+            repeteBtn.setChecked(dataValida.get(Calendar.MONTH) != dataOcorreu.get(Calendar.MONTH) ? true : false);
         }
     }
 }
