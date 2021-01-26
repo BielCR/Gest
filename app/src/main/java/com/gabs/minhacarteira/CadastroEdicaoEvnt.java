@@ -45,6 +45,7 @@ public class CadastroEdicaoEvnt extends AppCompatActivity {
     3 - Edita saida
      */
     private int acao = -1;
+    private Evento eventoSelect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,13 +104,6 @@ public class CadastroEdicaoEvnt extends AppCompatActivity {
             }
         });
 
-        salvarBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cadastrarNovoEvento();
-            }
-        });
-
         repeteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,13 +115,63 @@ public class CadastroEdicaoEvnt extends AppCompatActivity {
             }
         });
 
+        salvarBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+
+            public void onClick(View v) {
+                if (acao < 2) {
+                    //cadastra um novo evento no banco de dados
+                    cadastrarNovoEvento();
+                }else{
+                    //realiza um update no evento existente
+                    updateEvento();
+                }
+            }
+        });
+
+
         cancelarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //termina e execucao de uma act e volta a anterior
-                finish();
+                if (acao < 2) {
+                    //termina e execucao de uma act e volta a anterior caso a ação seja de cancelamento
+                    finish();
+                } else {
+                    //chama o metodo de delete do evento no banco de dados
+                }
             }
         });
+    }
+
+    //Metodo de atualizacao de um evento
+    public void updateEvento(){
+        //setando o nome e o valor do evento selecionado
+        eventoSelect.setNome(nome.getText().toString());
+        eventoSelect.setValor(Double.parseDouble(this.valor.getText().toString()));
+        //se a acao == 3, esta seno realizado um evento de saida, ou seja, o valor tem que ser multiplicado por -1
+        if(acao == 3){
+            eventoSelect.setValor(eventoSelect.getValor() * -1) ;
+        }
+
+        eventoSelect.setOcorreu(calendarioTemp.getTime());
+        //um novo calendario para setar a data limite (repeticao)
+        Calendar dataLimite = Calendar.getInstance();
+        dataLimite.setTime(calendarioTemp.getTime());
+
+        //verificando se esse evento ira repetir por alguns meses(VOLTAR)
+        if (repeteBtn.isChecked()) {
+            //definindo o mes limite
+            String mesLimite = (String) mesesRepete.getSelectedItem();
+            dataLimite.add(Calendar.MONTH, Integer.parseInt(mesLimite));
+        }
+
+        //setando ate o ultimo dia do mes limite
+        dataLimite.set(Calendar.DAY_OF_MONTH, dataLimite.getActualMaximum(Calendar.DAY_OF_MONTH));
+        eventoSelect.setValida(dataLimite.getTime());
+
+        EventosDB db = new EventosDB(CadastroEdicaoEvnt.this);
+        db.updateEvento(eventoSelect);
+        finish();
     }
 
     private void cadastrarNovoEvento() {
@@ -207,13 +251,13 @@ public class CadastroEdicaoEvnt extends AppCompatActivity {
         int id = Integer.parseInt(getIntent().getStringExtra("id"));
         if (id != 0) {
             EventosDB db = new EventosDB(CadastroEdicaoEvnt.this);
-            Evento eventoSelect =  db.buscaEventoID(id);
+            eventoSelect = db.buscaEventoID(id);
 
             //carregar as informacoes nos campos de edicao
-           SimpleDateFormat formatador = new SimpleDateFormat("dd/mm/yyyy");
+            SimpleDateFormat formatador = new SimpleDateFormat("dd/mm/yyyy");
 
             nome.setText(eventoSelect.getNome());
-            valor.setText(eventoSelect.getValor()+"");
+            valor.setText(eventoSelect.getValor() + "");
             data.setText(formatador.format(eventoSelect.getOcorreu()));
 
             Calendar dataValida = Calendar.getInstance();
@@ -223,6 +267,10 @@ public class CadastroEdicaoEvnt extends AppCompatActivity {
             dataOcorreu.setTime(eventoSelect.getOcorreu());
 
             repeteBtn.setChecked(dataValida.get(Calendar.MONTH) != dataOcorreu.get(Calendar.MONTH) ? true : false);
+            if (repeteBtn.isChecked()) {
+                mesesRepete.setEnabled(true);
+                mesesRepete.setSelection(dataValida.get(Calendar.MONTH) - dataOcorreu.get(Calendar.MONTH) - 1);
+            }
         }
     }
 }

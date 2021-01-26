@@ -110,7 +110,7 @@ public class VisualizarEventos extends AppCompatActivity {
                 Evento eventoSelceionado = eventos.get(indice);
                 Intent novoFluxo = new Intent(VisualizarEventos.this, CadastroEdicaoEvnt.class);
 
-                if (operacao == 00) {
+                if (operacao == 0) {
                     //edicao de entrada
                     novoFluxo.putExtra("acao", 2);
                 } else {
