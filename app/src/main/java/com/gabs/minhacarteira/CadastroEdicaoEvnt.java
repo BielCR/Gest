@@ -3,6 +3,7 @@ package com.gabs.minhacarteira;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -129,7 +131,7 @@ public class CadastroEdicaoEvnt extends AppCompatActivity {
                 if (acao < 2) {
                     //cadastra um novo evento no banco de dados
                     cadastrarNovoEvento();
-                }else{
+                } else {
                     //realiza um update no evento existente
                     updateEvento();
                 }
@@ -159,24 +161,24 @@ public class CadastroEdicaoEvnt extends AppCompatActivity {
         });
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-            super.onActivityResult(requestCode,resultCode, data);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-            if(resultCode == RESULT_OK){
-                Bitmap imagemUser = (Bitmap) data.getExtras().get("data");
-                foto.setImageBitmap(imagemUser);
-                foto.setBackground(null);
+        if (resultCode == RESULT_OK) {
+            Bitmap imagemUser = (Bitmap) data.getExtras().get("data");
+            foto.setImageBitmap(imagemUser);
+            foto.setBackground(null);
 
-                salvarImagem(imagemUser);
-            }
+            salvarImagem(imagemUser);
+        }
     }
 
-    private void salvarImagem(Bitmap imagemSalva){
+    private void salvarImagem(Bitmap imagemSalva) {
         Random gerador = new Random();
         Date instante = new Date();
 
         //definindo o nome da imagem (arquivo)
-        String nome = gerador.nextInt() + ""+instante.getTime()+".png";
+        String nome = gerador.nextInt() + "" + instante.getTime() + ".png";
 
         nomeFoto = nome;
 
@@ -190,20 +192,41 @@ public class CadastroEdicaoEvnt extends AppCompatActivity {
             gravador.flush();
             gravador.close();
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
             System.err.println("Erro ao armazenar a imagem");
             ex.printStackTrace();
         }
     }
 
+    //metodo chamado durante a edicao de algum evento
+    private void carregarImagem() {
+        if (nomeFoto != null) {
+            File sd = Environment.getExternalStorageDirectory();
+            File arquivoLeitura = new File(sd, nomeFoto);
+
+            try {
+
+                FileInputStream leitor = new FileInputStream(arquivoLeitura);
+                Bitmap img = BitmapFactory.decodeStream(leitor);
+
+                foto.setImageBitmap(img);
+                foto.setBackground(null);
+
+            } catch (Exception ex) {
+                System.err.println("Erro na leitura da imagem!");
+                ex.printStackTrace();
+            }
+        }
+    }
+
     //Metodo de atualizacao de um evento
-    public void updateEvento(){
+    public void updateEvento() {
         //setando o nome e o valor do evento selecionado
         eventoSelect.setNome(nome.getText().toString());
         eventoSelect.setValor(Double.parseDouble(this.valor.getText().toString()));
         //se a acao == 3, esta seno realizado um evento de saida, ou seja, o valor tem que ser multiplicado por -1
-        if(acao == 3){
-            eventoSelect.setValor(eventoSelect.getValor() * -1) ;
+        if (acao == 3) {
+            eventoSelect.setValor(eventoSelect.getValor() * -1);
         }
 
         eventoSelect.setOcorreu(calendarioTemp.getTime());
@@ -313,7 +336,10 @@ public class CadastroEdicaoEvnt extends AppCompatActivity {
             nome.setText(eventoSelect.getNome());
             valor.setText(eventoSelect.getValor() + "");
             data.setText(formatador.format(eventoSelect.getOcorreu()));
+
+            //carregando o nome da foto e exibindo logo em seguida
             nomeFoto = eventoSelect.getCaminhoFoto();
+            carregarImagem();
 
             Calendar dataValida = Calendar.getInstance();
             dataValida.setTime(eventoSelect.getValida());
@@ -321,7 +347,7 @@ public class CadastroEdicaoEvnt extends AppCompatActivity {
             Calendar dataOcorreu = Calendar.getInstance();
             dataOcorreu.setTime(eventoSelect.getOcorreu());
 
-            repeteBtn.setChecked(dataValida.get(Calendar.MONTH) != dataOcorreu.get(Calendar.MONTH) ? true : false);
+             repeteBtn.setChecked(dataValida.get(Calendar.MONTH) != dataOcorreu.get(Calendar.MONTH) ? true : false);
             if (repeteBtn.isChecked()) {
                 mesesRepete.setEnabled(true);
                 mesesRepete.setSelection(dataValida.get(Calendar.MONTH) - dataOcorreu.get(Calendar.MONTH) - 1);
