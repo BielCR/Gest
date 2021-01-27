@@ -2,7 +2,9 @@ package com.gabs.minhacarteira;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -141,6 +143,24 @@ public class CadastroEdicaoEvnt extends AppCompatActivity {
                 }
             }
         });
+
+        fotoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent cameraAtc = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                startActivityForResult(cameraAtc, 100);
+            }
+        });
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+            super.onActivityResult(requestCode,resultCode, data);
+
+            if(resultCode == RESULT_OK){
+                Bitmap imagemUser = (Bitmap) data.getExtras().get("data");
+                foto.setImageBitmap(imagemUser);
+            }
     }
 
     //Metodo de atualizacao de um evento
